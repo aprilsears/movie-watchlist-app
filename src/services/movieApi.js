@@ -1,3 +1,12 @@
+export const getMovieVideos = async (movieId) => {
+  try {
+    const response = await movieApi.get(`/movie/${movieId}/videos`)
+    return response.data.results
+  } catch (error) {
+    console.error('Error fetching movie videos:', error)
+    return []
+  }
+}
 import axios from 'axios'
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY

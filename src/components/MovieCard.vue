@@ -23,9 +23,27 @@
       </div>
 
       <!-- Hover overlay -->
-      <div class="poster-overlay">
+      <div class="poster-overlay" @click="showTrailer">
         <div class="play-button">
           <Play />
+        </div>
+      </div>
+      <!-- Embedded Trailer Player -->
+      <div v-if="trailerUrl" class="trailer-modal">
+        <div class="trailer-backdrop" @click="closeTrailer"></div>
+        <div class="trailer-content">
+          <iframe
+            :src="trailerUrl"
+            width="560"
+            height="315"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen
+            title="Movie Trailer"
+          ></iframe>
+          <button class="btn btn-danger" @click="closeTrailer" style="margin-top: 1rem">
+            Close
+          </button>
         </div>
       </div>
 
@@ -114,6 +132,23 @@ import { ref, computed } from 'vue'
 import { useMovieStore } from '../stores/movieStore'
 import { Star, Plus, Trash2, Eye, Clock, Film, TrendingUp, Play, Calendar } from 'lucide-vue-next'
 import StarRating from './StarRating.vue'
+import { getMovieVideos } from '../services/movieApi'
+const trailerUrl = ref(null)
+
+const showTrailer = async () => {
+  const videos = await getMovieVideos(props.movie.id)
+  console.log(videos.map((v) => ({ site: v.site, type: v.type, name: v.name })))
+  const trailer = videos.find((v) => v.site === 'YouTube' && v.type === 'Trailer')
+  if (trailer) {
+    trailerUrl.value = `https://www.youtube.com/embed/${trailer.key}`
+  } else {
+    alert('Trailer not available for this movie.')
+  }
+}
+
+const closeTrailer = () => {
+  trailerUrl.value = null
+}
 
 const props = defineProps({
   movie: {
