@@ -3,8 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
   {
     path: '/',
-    name: 'SearchDefault',
-    component: () => import('../views/SearchView.vue'),
+    redirect: '/search',
   },
   {
     path: '/search',

@@ -67,11 +67,6 @@
         <p class="text-gray-400 text-lg">Search for any movie to get started</p>
       </div>
     </div>
-    <!-- Debug Info -->
-    <div class="text-xs text-gray-400 mt-8">
-      <div>API Key: {{ apiKey }}</div>
-      <div>Base URL: {{ baseUrl }}</div>
-    </div>
   </div>
 </template>
 <script setup>
@@ -84,8 +79,6 @@ const searchQuery = ref('')
 const searchResults = ref([])
 const loading = ref(false)
 const errorMessage = ref('')
-const apiKey = import.meta.env.VITE_TMDB_API_KEY
-const baseUrl = import.meta.env.VITE_TMDB_BASE_URL
 const searchMovies = async () => {
   if (!searchQuery.value.trim()) return
   loading.value = true
