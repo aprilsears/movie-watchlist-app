@@ -9,7 +9,7 @@
           </div>
           <div>
             <h1 class="app-title">A & A Movie Picks</h1>
-            <p class="app-subtitle">Our personal movie library</p>
+            <p class="app-subtitle">Movies to Watch and Review</p>
           </div>
         </div>
 
