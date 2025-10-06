@@ -1,6 +1,8 @@
 export const getMovieVideos = async (movieId) => {
   try {
     const response = await movieApi.get(`/movie/${movieId}/videos`)
+    console.log('getMovieVideos raw response:', response.data)
+    console.log('getMovieVideos results:', response.data.results)
     return response.data.results
   } catch (error) {
     console.error('Error fetching movie videos:', error)

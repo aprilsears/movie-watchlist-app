@@ -1,3 +1,55 @@
+/* Trailer Modal Styles - RESTORED RESPONSIVE VERSION */
+.trailer-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  z-index: 1000;
+  background: rgba(0,0,0,0.85);
+}
+
+.trailer-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1001;
+}
+
+.trailer-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1002;
+  background: #111;
+  padding: 0;
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  width: 82vw;
+  height: 48vw;
+  max-width: 1280px;
+  max-height: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.trailer-content iframe {
+  border-radius: 0.5rem;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  box-sizing: border-box;
+  display: block;
+}
+
+
 /* Background Elements */
 .bg-animated {
   position: absolute;

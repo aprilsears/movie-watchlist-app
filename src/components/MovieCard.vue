@@ -28,24 +28,26 @@
           <Play />
         </div>
       </div>
-      <!-- Embedded Trailer Player -->
-      <div v-if="trailerUrl" class="trailer-modal">
-        <div class="trailer-backdrop" @click="closeTrailer"></div>
-        <div class="trailer-content">
-          <iframe
-            :src="trailerUrl"
-            width="560"
-            height="315"
-            frameborder="0"
-            allow="autoplay; encrypted-media"
-            allowfullscreen
-            title="Movie Trailer"
-          ></iframe>
-          <button class="btn btn-danger" @click="closeTrailer" style="margin-top: 1rem">
-            Close
-          </button>
+      <!-- Embedded Trailer Player as global modal -->
+      <teleport to="body">
+        <div v-if="trailerUrl" class="trailer-modal">
+          <div class="trailer-backdrop" @click="closeTrailer"></div>
+          <div class="trailer-content">
+            <iframe
+              :src="trailerUrl"
+              width="560"
+              height="315"
+              frameborder="0"
+              allow="autoplay; encrypted-media"
+              allowfullscreen
+              title="Movie Trailer"
+            ></iframe>
+            <button class="btn btn-danger" @click="closeTrailer" style="margin-top: 1rem">
+              Close
+            </button>
+          </div>
         </div>
-      </div>
+      </teleport>
 
       <!-- Rating Badge -->
       <div class="rating-badge">
@@ -138,7 +140,19 @@ const trailerUrl = ref(null)
 const showTrailer = async () => {
   const videos = await getMovieVideos(props.movie.id)
   console.log(videos.map((v) => ({ site: v.site, type: v.type, name: v.name })))
-  const trailer = videos.find((v) => v.site === 'YouTube' && v.type === 'Trailer')
+  if (videos.length > 0) {
+    console.log('First video object:', videos[0])
+  }
+  // Try to find a YouTube Trailer first
+  let trailer = videos.find((v) => v.site === 'YouTube' && v.type === 'Trailer')
+  // If not found, try to find a YouTube Teaser
+  if (!trailer) {
+    trailer = videos.find((v) => v.site === 'YouTube' && v.type === 'Teaser')
+  }
+  // If still not found, use the first YouTube video
+  if (!trailer) {
+    trailer = videos.find((v) => v.site === 'YouTube')
+  }
   if (trailer) {
     trailerUrl.value = `https://www.youtube.com/embed/${trailer.key}`
   } else {
